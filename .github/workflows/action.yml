@@ -23,7 +23,7 @@ jobs:
           docker login https://ghcr.io -u ${{ secrets.DOCKER_USERNAME}} -p ${{ secrets.DOCKER_KEY}}
       - name: Build and push image to registry
         run: |
-          docker buildx build --push -t ${{ secrets.DOCKER_TAG }} .
+          docker buildx build --push -t ghcr.io/omvk97/testapp/fullapp:${{ github.sha }} .
 
 
   deploy:
@@ -37,4 +37,4 @@ jobs:
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          images: 'ghcr.io/omvk97/testapp/fullapp:latest'
+          images: 'ghcr.io/omvk97/testapp/fullapp:${{ github.sha }}'
